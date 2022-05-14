@@ -1,21 +1,16 @@
 import type { NextPage } from "next";
-import { signIn, useSession } from "next-auth/react";
-import styles from "../styles/Home.module.css";
+import { Navbar } from "../components/shared/Navbar";
+
+export const getServerSideProps = async () => {
+	return { props: {} };
+};
 
 const Home: NextPage = () => {
-	const { data, status } = useSession();
-
-	if (status == "loading") {
-		return <div>Loading</div>;
-	} else if (status == "authenticated") {
-		return <div>{data.user?.name}</div>;
-	} else {
-		return (
-			<div className={styles.container}>
-				<button onClick={() => signIn()}>Click</button>
-			</div>
-		);
-	}
+	return (
+		<>
+			<Navbar />
+		</>
+	);
 };
 
 export default Home;
