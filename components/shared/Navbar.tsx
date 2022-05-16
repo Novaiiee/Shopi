@@ -1,21 +1,7 @@
-import {
-	Avatar,
-	Box,
-	Button,
-	Flex,
-	HStack,
-	Input,
-	Menu,
-	MenuButton,
-	MenuItem,
-	MenuList,
-	Text,
-	useDisclosure,
-} from "@chakra-ui/react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { FC } from "react";
-import { SearchBar } from "../home/SearchBar";
+import { SearchBar } from "./SearchBar";
 
 export const Navbar: FC = () => {
 	const { data, status } = useSession();
@@ -23,50 +9,54 @@ export const Navbar: FC = () => {
 	const isAuthenticated = status === "authenticated";
 	const isUnauthenticated = status === "unauthenticated";
 
-	const { onToggle } = useDisclosure({
-		defaultIsOpen: true,
-	});
-
 	return (
-		<Box css={{ display: "sticky" }}>
-			<HStack w="100vw" justifyContent={"space-between"} backgroundColor="gray.500" py={4} px={20}>
-				<Flex grow={2}>
-					<Text color="white" fontWeight={600} fontSize={20}>
-						Zaint
-					</Text>
-				</Flex>
-				<Flex grow={5}>
+		<div className="sticky">
+			<div className="flex items-center justify-between bg-gray-500 dark:bg-gray-900 py-4 px-20 w-screen">
+				<div className="flex flex-1">
+					<Link href="/">
+						<h1 className="text-white font-semibold text-xl">Zaint</h1>
+					</Link>
+				</div>
+				<div className="flex-3">
 					<SearchBar />
-				</Flex>
-				<Flex grow={2} justifyContent="end">
+				</div>
+				<div className="justify-end flex flex-1">
 					{isAuthenticated && (
-						<Menu onOpen={onToggle} onClose={onToggle}>
-							<MenuButton
-								as={Avatar}
-								src={data?.user?.image ?? ""}
-								borderRadius={8}
-								w={10}
-								h={10}
-							></MenuButton>
-							<MenuList>
-								<Link href="/account">
-									<MenuItem>Account</MenuItem>
-								</Link>
-								<MenuItem>
-									<Button py={1} onClick={() => signOut()} w="full">
-										Logout
-									</Button>
-								</MenuItem>
-							</MenuList>
-						</Menu>
+						<div className="dropdown dropdown-end space-y-2">
+							<div className="flex items-center space-x-4">
+								<h1>Logged in as {data?.user?.name}</h1>
+								<img
+									className="rounded-md h-10"
+									tabIndex={0}
+									src={data?.user?.image ?? ""}
+									alt="Your profile pic"
+								/>
+							</div>
+							<ul
+								tabIndex={0}
+								className="dropdown-content menu p-2 shadow bg-base-100 rounded-md w-52 space-y-6"
+							>
+								<li>
+									<Link href="/account">Account</Link>
+									<Link href="/account">Order History</Link>
+								</li>
+								<li>
+									<button className="btn text-white" onClick={() => signOut()}>
+										Sign Out
+									</button>
+								</li>
+							</ul>
+						</div>
 					)}
 					{isUnauthenticated && (
 						<>
-							<Button onClick={() => signIn()}>Sign in</Button>
+							<button className="btn" onClick={() => signIn()}>
+								Sign in
+							</button>
 						</>
 					)}
-				</Flex>
-			</HStack>
-		</Box>
+				</div>
+			</div>
+		</div>
 	);
 };

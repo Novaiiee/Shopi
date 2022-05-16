@@ -1,14 +1,27 @@
+import { PrismaClient, Product } from "@prisma/client";
 import type { NextPage } from "next";
+import Head from "next/head";
+import { ProductsList } from "../components/home/ProductsList";
 import { Navbar } from "../components/shared/Navbar";
 
+const prisma = new PrismaClient();
+
 export const getServerSideProps = async () => {
-	return { props: {} };
+	const products = await prisma.product.findMany({
+		take: 10,
+	});
+
+	return { props: { products: products.map((p) => ({...p, price: Number(p.price)})) } };
 };
 
-const Home: NextPage = () => {
+const Home: NextPage<{ products: Product[] }> = ({ products }) => {
 	return (
 		<>
+		<Head>
+			<title>Zaint</title>
+		</Head>
 			<Navbar />
+			<ProductsList products={products} />
 		</>
 	);
 };
