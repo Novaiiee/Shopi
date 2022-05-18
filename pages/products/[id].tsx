@@ -1,9 +1,8 @@
-import { PrismaClient, Product } from "@prisma/client";
+import { Product } from "@prisma/client";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import Head from "next/head";
-import { Navbar } from "../../components/shared/Navbar";
-
-const prisma = new PrismaClient();
+import { Navbar } from "@components/shared/Navbar";
+import { prisma } from "@lib/prisma";
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	const products = await prisma.product.findMany();

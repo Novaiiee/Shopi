@@ -1,8 +1,8 @@
+import useDebounce from "@hooks/useDebounce";
 import { Product } from "@prisma/client";
 import Link from "next/link";
 import { FC, useState } from "react";
 import { useQuery } from "react-query";
-import useDebounce from "../../hooks/useDebounce";
 
 export const SearchBar: FC = () => {
 	const [input, setInput] = useState("");
