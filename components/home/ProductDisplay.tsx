@@ -9,7 +9,7 @@ interface ProductDisplayProps {
 export const ProductDisplay: FC<ProductDisplayProps> = ({ product }) => {
 	return (
 		<Link href={`/products/${product.id}`}>
-			<div className="shadow-2xl rounded-md">
+			<div className="shadow-2xl rounded-md border-1">
 				<img
 					className="h-72 w-full object-scale-down rounded-t-md"
 					src={product.image}

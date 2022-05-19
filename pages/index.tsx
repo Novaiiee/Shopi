@@ -17,7 +17,7 @@ const Home: NextPage<{ products: Product[] }> = ({ products }) => {
 	return (
 		<>
 			<Head>
-				<title>Zaint</title>
+				<title>Shopi</title>
 			</Head>
 			<Navbar />
 			<ProductsList products={products} />

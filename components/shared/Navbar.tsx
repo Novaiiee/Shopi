@@ -1,6 +1,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { FC } from "react";
+import { ShoppingBag } from "react-feather";
 import { SearchBar } from "./SearchBar";
 
 export const Navbar: FC = () => {
@@ -11,10 +12,10 @@ export const Navbar: FC = () => {
 
 	return (
 		<div className="sticky">
-			<div className="flex items-center justify-between bg-gray-500 dark:bg-gray-900 py-4 px-20 w-screen">
+			<div className="flex items-center justify-between bg-red-500 py-4 px-20 w-screen">
 				<div className="flex flex-1">
 					<Link href="/">
-						<h1 className="text-white font-semibold text-xl">Zaint</h1>
+						<h1 className="text-white font-semibold text-xl">Shopi</h1>
 					</Link>
 				</div>
 				<div className="flex-3">
@@ -23,8 +24,10 @@ export const Navbar: FC = () => {
 				<div className="justify-end flex flex-1">
 					{isAuthenticated && (
 						<div className="dropdown dropdown-end space-y-2">
-							<div className="flex items-center space-x-4">
-								<h1>Logged in as {data?.user?.name}</h1>
+							<div className="flex items-center space-x-8">
+								<Link href="/cart">
+									<ShoppingBag color="white" />
+								</Link>
 								<img
 									className="rounded-md h-10"
 									tabIndex={0}
@@ -38,7 +41,7 @@ export const Navbar: FC = () => {
 							>
 								<li>
 									<Link href="/account">Account</Link>
-									<Link href="/account">Order History</Link>
+									<Link href="/purchases">Order History</Link>
 								</li>
 								<li>
 									<button className="btn text-white" onClick={() => signOut()}>
